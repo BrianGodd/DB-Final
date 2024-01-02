@@ -21,12 +21,13 @@ const SpotifyPlayerComponent = ({uri}) => {
 
   return (
     <div>
-      
+
       <div> <br/><br/> </div>
+      
       <iframe
         style={{ borderRadius: '12px' }}
         src={embedURL}
-        width="100%"
+        width="40%"
         height="352"
         frameBorder="0"
         allowFullScreen=""
@@ -34,6 +35,7 @@ const SpotifyPlayerComponent = ({uri}) => {
         loading="lazy"
       ></iframe>
 
+      <div> <br/><br/> </div>
       <Button type="primary"><a href={uri} target="_blank" rel="noopener noreferrer">
         Open on Spotify
       </a></Button>
