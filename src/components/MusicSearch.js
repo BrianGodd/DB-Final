@@ -91,7 +91,7 @@ const MusicSearch = ({ onSearch }) => {
       const response = await axios(options);
   
       if (response.data.tracks && response.data.tracks.items && response.data.tracks.items.length > 0) {
-        const filteredTracks = response.data.tracks.items.filter(track => track.popularity >= 50);
+        const filteredTracks = response.data.tracks.items.filter(track => track.popularity >= 20);
         const ind = Math.floor(Math.random() * filteredTracks.length);
         const track = (guess)? filteredTracks[ind]:response.data.tracks.items[0];
         setID(track.id);
