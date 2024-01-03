@@ -85,6 +85,7 @@ function App() {
           <div> <br/><br/> </div>
           <div>
           <h1>Music App</h1>
+          {/* <SpotifySearch /> */}
           <MusicSearch onSearch={handleSearch} />
           
           {/* <p style={{position: 'absolute', top: '10px', left: '700px'}}>Update at 20240102</p> */}

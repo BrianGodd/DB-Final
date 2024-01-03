@@ -1,0 +1,26 @@
+/* src/components/SpotifyPlayer.css */
+.spotify-container {
+    position: relative;
+  }
+  
+  .black-overlay {
+    position: absolute;
+    top: 7.5%;
+    left: 30%;
+    width: 40%;
+    height: 57%;
+    background-color: #f5f5f5;
+    opacity: 1; /* Adjust the opacity to your preference */
+    z-index: 1; /* Make sure the overlay is above the iframe */
+  }
+
+  .black-overlay-2 {
+    position: absolute;
+    top: 60%;
+    left: 12.5%; 
+    width: 50%;
+    height: 30%; 
+    background-color: #f5f5f5;
+    opacity: 1; /* Adjust the opacity to your preference for the second overlay */
+    z-index: 1; /* Make sure the second overlay is above the iframe */
+  }
