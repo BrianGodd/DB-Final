@@ -92,7 +92,7 @@ const UserLogin = () => {
         </Button>
       ) : (
         <h1 style={{ background: 'pink', color: 'black', padding: '20px', marginTop: '-2%', textAlign: 'center' }}>
-          {username} 歡迎~
+          {nickname} 歡迎~
         </h1>
       )}
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import SpotifyPlayerComponent from './SpotifyPlayer';
 import SongInfoComponent from './SongInfo';
 import { Button, Flex , Radio, Spin } from 'antd';
+import { spotifyToken } from './UserData';
 
 const MusicSearch = ({ onSearch }) => {
   const [searchName, setSearchName] = useState('All I Want for Christmas Is You');
@@ -11,7 +12,7 @@ const MusicSearch = ({ onSearch }) => {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
-  const [key, setKey] = useState('BQBblFzXHDhI3D7y7rZxgLAGasn7p3bTow4zA9n3k-IaPq1_GWairv9lXll5LFDXWMVdAj3p5FaE0OxC7F_etU7CEsEU_xfRkUKdEFrfMIk1Yv6TTUPlQPpTmqGN29WROWv6y3jkOPgTqAqXzHNbiF7aN2J7UfQUzOX3PuPoorWRkeA5hEjDsc5bGvqJiE62Jdh0bGcFVKXnCyBb');
+  const [key, setKey] = useState(spotifyToken);
   const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8');
   const [spotifyVUri, setSpotifyVUri] = useState("https://open.spotify.com/embed/track/0YTM7bCx451c6LQbkddy4Q?utm_source=generator");
 
@@ -43,6 +44,7 @@ const MusicSearch = ({ onSearch }) => {
     track_Year: '',
   };
   const [songs, setSongs] = useState(Array(10).fill({ TrackInfo }));
+
 
   const SearchSong = async () => {
     setLoading(true);
@@ -280,12 +282,6 @@ const MusicSearch = ({ onSearch }) => {
       </div>
       
       <p></p>
-      <input
-        type="text"
-        placeholder="Acess Key"
-        value={key}
-        onChange={(e) => setKey(e.target.value)}
-      />
     </div>
   );
 };

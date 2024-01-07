@@ -3,6 +3,7 @@ import axios from 'axios';
 import SpotifyPlayerComponent from './SpotifyPlayer';
 import SongInfoComponent from './SongInfo';
 import { Button, Flex , Radio, Spin } from 'antd';
+import { spotifyToken } from './UserData';
 
 const MusicGuess = ({ onSearch }) => {
   const [searchName, setSearchName] = useState('All I Want for Christmas Is You');
@@ -11,7 +12,7 @@ const MusicGuess = ({ onSearch }) => {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
-  const [key, setKey] = useState('BQCvM_hKKL6t6BWmpGx18AcG44vjneNdkCcGDderjYXub2i5RV0Sy0odsNQarn13uNxcADI0MABZvVsT5Y6tbBFLBzkQCmBeKc-qldFNcvOuHi6wd5LK5j5pmBM2AqFU3xiUZ8H7OpPzit7qKyX5ZJ94n_bZtlRCfsB637w17w_aL3j-yycoB2iLLc83fFeddm-RR_aIbjvCSQRf');
+  const [key, setKey] = useState(spotifyToken);
   const [guess, setGuess] = useState(false);
   const [guessDB, setGuessDB] = useState(false);
   const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8');
@@ -80,7 +81,7 @@ const MusicGuess = ({ onSearch }) => {
         }))
       );
 
-      const optionsData = [];
+      /*const optionsData = [];
       const randomAns = Math.floor(Math.random() * 4);
       setID(songs[randomAns].id);
       setTrack_Name(songs[randomAns].track_Name);
@@ -100,13 +101,42 @@ const MusicGuess = ({ onSearch }) => {
         [optionsData[i], optionsData[j]] = [optionsData[j], optionsData[i]];
       }
 
-      setOptions(optionsData);
+      setOptions(optionsData);*/
     } catch (error) {
       console.error('Error fetching data', error);
     }finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if(guessDB)
+    {
+      const optionsData = [];
+      const randomAns = Math.floor(Math.random() * 4);
+    
+      setID(songs[randomAns].id);
+      setTrack_Name(songs[randomAns].track_Name);
+      setTrack_Artist(songs[randomAns].track_Artist);
+      setTrack_Album(songs[randomAns].track_Album);
+      setTrack_Num(songs[randomAns].track_Num);
+      setTrack_Popularity(songs[randomAns].track_Popularity);
+      setTrack_Time(songs[randomAns].track_Time);
+      setTrack_Year(songs[randomAns].track_Year);
+      setTrackName(songs[randomAns].track_Name);
+      console.log("ans:" + randomAns);
+      console.log(songs[randomAns].track_Name);
+    
+      for (let i = 0; i < 4; i++) optionsData.push(songs[i].track_Name);
+    
+      for (let i = optionsData.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [optionsData[i], optionsData[j]] = [optionsData[j], optionsData[i]];
+      }
+    
+      setOptions(optionsData);
+    }
+  }, [songs]);
 
   const searchBySpotify = async () => {
     let query = '';
@@ -237,6 +267,7 @@ const MusicGuess = ({ onSearch }) => {
     else
     {
       setGuess(true);
+      setGuessDB(false);
     }
   };
 
@@ -249,6 +280,7 @@ const MusicGuess = ({ onSearch }) => {
     else
     {
       setGuessDB(true);
+      setGuess(false);
     }
   };
 
@@ -457,12 +489,6 @@ const MusicGuess = ({ onSearch }) => {
       </div>
       
       <p></p>
-      <input
-        type="text"
-        placeholder="Acess Key"
-        value={key}
-        onChange={(e) => setKey(e.target.value)}
-      />
     </div>
   );
 };

@@ -16,6 +16,7 @@ import {
 import { Layout, Menu, Button, theme } from 'antd';
 import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
+import { UpdateToken } from '../components/UserData';
 
 function PlayListPage() {
 
@@ -28,6 +29,7 @@ function PlayListPage() {
   let navigate = useNavigate();
 
   const SwitchPage = (item) => {
+    UpdateToken();
     switch (item.key) {
       case '1':
         window.scrollTo(0, 0);

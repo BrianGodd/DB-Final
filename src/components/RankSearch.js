@@ -3,9 +3,10 @@ import React, { useState , useEffect } from 'react';
  import SpotifyPlayerComponent from './SpotifyPlayer'; 
  import SongInfoComponent from './SongInfo'; 
  import { Button, Flex , Radio, Spin } from 'antd'; 
+ import { spotifyToken } from './UserData';
   
  const RankSearch = ({ onSearch }) => { 
-   const [key, setKey] = useState('BQC_LRD_enZTZgE0JwXjkguedUgLJlvbHmT-BsnPj65MqcCMPBkE0Jeqb8XKlVxtAO8defxSz6_Yir9EEYcSzApcQ-uat4TBbW6Slj7hdyzq9TQxtBX1uMLcy8IzVPvXP1CWt46VOjts-0AhDOjtdkKNi8T-9jJQJd5UT9NkGoDkMhvLonyRuor5EoYR7UGyB40ktXDN3OT-JViL'); 
+   const [key, setKey] = useState(spotifyToken); 
    const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8'); 
    const [spotifyVUri, setSpotifyVUri] = useState("https://open.spotify.com/embed/track/0YTM7bCx451c6LQbkddy4Q?utm_source=generator"); 
   
@@ -140,13 +141,7 @@ import React, { useState , useEffect } from 'react';
          } 
        </div> 
   
-       <p></p> 
-       <input 
-         type="text" 
-         placeholder="Acess Key" 
-         value={key} 
-         onChange={(e) => setKey(e.target.value)} 
-       /> 
+       <p></p>  
      </div> 
    ); 
  }; 

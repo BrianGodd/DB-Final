@@ -17,6 +17,7 @@ import {
 import { Layout, Menu, Button, theme } from 'antd';
 import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
+import { UpdateToken } from '../components/UserData';
 
 function MainPage() {
 
@@ -25,10 +26,12 @@ function MainPage() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
+  const imageUrl = require('../components/SpotifyPlayer.jpg').default;
   
   let navigate = useNavigate();
 
   const SwitchPage = (item) => {
+    UpdateToken();
     switch (item.key) {
       case '1':
         window.scrollTo(0, 0);
@@ -119,6 +122,7 @@ function MainPage() {
             <h1 style={{ marginLeft: '40%' }}>Music App</h1>
           </div>
           </Header>
+          <img src={imageUrl} alt="JPEG圖片" />
         </Layout>
       </Layout>
       

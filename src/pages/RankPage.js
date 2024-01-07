@@ -14,6 +14,7 @@ import React, { useState } from 'react';
  import GuessPage from "./GuessPage"; 
  import MainPage from "./MainPage"; 
  import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom"; 
+ import { UpdateToken } from '../components/UserData';
   
   
   function RankPage() { 
@@ -26,6 +27,7 @@ import React, { useState } from 'react';
    let navigate = useNavigate(); 
   
    const SwitchPage = (item) => {
+    UpdateToken();
     switch (item.key) {
       case '1':
         window.scrollTo(0, 0);
