@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; 
  import RankSearch from '../components/RankSearch'; 
  import SpotifyPlayerComponent from '../components/SpotifyPlayer'; 
+ import UserLogin from '../components/UserLogin';
  import { ConfigProvider, Space } from 'antd'; 
  import { 
    MenuFoldOutlined, 
@@ -60,7 +61,7 @@ import React, { useState } from 'react';
      <div className="App"> 
        <Layout> 
          <Sider trigger={null} collapsible collapsed={collapsed}> 
-         <h1 style={{ background: 'pink', color: 'black' ,padding: '20px', marginTop: '-2%'}}>user</h1> 
+            <UserLogin/>
            <div className="demo-logo-vertical" /> 
            <Menu 
              theme="dark" 
@@ -85,7 +86,7 @@ import React, { useState } from 'react';
                { 
                  key: '4', 
                  icon: <UploadOutlined />, 
-                 label: '製作歌單', 
+                 label: '我的歌單', 
                }, 
                { 
                  key: '5', 

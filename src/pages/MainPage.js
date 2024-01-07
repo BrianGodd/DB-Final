@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MusicSearch from '../components/MusicSearch';
 import SpotifyPlayerComponent from '../components/SpotifyPlayer';
+import UserLogin from '../components/UserLogin';
 import SearchPage from "./SearchPage";
 import GuessPage from "./GuessPage";
 import RankPage from "./RankPage";
@@ -63,9 +64,10 @@ function MainPage() {
     <div className="MainPage">
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-        <h1 style={{ background: 'pink', color: 'black', padding: '20px', marginTop: '-2%', textAlign: 'center' }}>
-            user
-          </h1>
+            <div  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '5%'}}>
+            <UserLogin/>
+            </div>
+            
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
@@ -90,7 +92,7 @@ function MainPage() {
               {
                 key: '4',
                 icon: <UploadOutlined />,
-                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>製作歌單</span>,
+                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>我的歌單</span>,
               },
               {
                 key: '5',

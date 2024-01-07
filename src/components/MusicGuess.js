@@ -11,7 +11,7 @@ const MusicGuess = ({ onSearch }) => {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
-  const [key, setKey] = useState('BQCxtsLfOv-eBB1r4PnhP9Sa5C0QLvJun18A1Yv3sNuO72YOtF7D5y6AWRt8srXsVpCQachQD__uSnSHEhI0Tw_bbfp6RE3OzLXqrcEPqxDpfN_GbRyqOJC2iriwqWWSS98yjTCMOBj57Fyl7U89zZ6G5Kl41xeDgShXPW4DQOBY3y3MTI-vjD6xTOloXha6yw2tc0ks5T0t00YY');
+  const [key, setKey] = useState('BQCvM_hKKL6t6BWmpGx18AcG44vjneNdkCcGDderjYXub2i5RV0Sy0odsNQarn13uNxcADI0MABZvVsT5Y6tbBFLBzkQCmBeKc-qldFNcvOuHi6wd5LK5j5pmBM2AqFU3xiUZ8H7OpPzit7qKyX5ZJ94n_bZtlRCfsB637w17w_aL3j-yycoB2iLLc83fFeddm-RR_aIbjvCSQRf');
   const [guess, setGuess] = useState(false);
   const [guessDB, setGuessDB] = useState(false);
   const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8');

@@ -11,7 +11,7 @@ const MusicSearch = ({ onSearch }) => {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
-  const [key, setKey] = useState('BQBOzIJLq9it2sDN4BR9zQaBL5xZjyvPEgIvxFTWB6Evm9qDCXdhc66GriJPZ7h4bHH7GdEBYHROWsJ5zkHROIqt88e09rY8e6uaDEhXtCHiYOL9U-QS60bInQT8pISAGsM9qNwlCuILHLmuA6Jg2jWS2TMIhAeNw_Z1s-9ww0QDKbbPT52KpN8MRWUEoHP-cVqJhVW8BQPl0nlW');
+  const [key, setKey] = useState('BQBblFzXHDhI3D7y7rZxgLAGasn7p3bTow4zA9n3k-IaPq1_GWairv9lXll5LFDXWMVdAj3p5FaE0OxC7F_etU7CEsEU_xfRkUKdEFrfMIk1Yv6TTUPlQPpTmqGN29WROWv6y3jkOPgTqAqXzHNbiF7aN2J7UfQUzOX3PuPoorWRkeA5hEjDsc5bGvqJiE62Jdh0bGcFVKXnCyBb');
   const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8');
   const [spotifyVUri, setSpotifyVUri] = useState("https://open.spotify.com/embed/track/0YTM7bCx451c6LQbkddy4Q?utm_source=generator");
 
