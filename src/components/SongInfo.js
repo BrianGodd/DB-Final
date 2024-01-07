@@ -2,11 +2,29 @@
 import React, { useState } from 'react';
 import { Button, Card } from 'antd';
 import axios from 'axios';
+import { username, nickname } from './UserData';
 
 const SongInfoComponent = ({ song_name, artist_name, album_name, track_num, popularity, time, year , song_id, artist_id, album_id}) => {
   // Convert seconds to minutes and seconds
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
+
+  const UpdateList = async () => {
+      console.log(username);
+      console.log(song_id);
+    try {
+      const response = await axios.post('https://7q96yl67a3.execute-api.us-east-1.amazonaws.com/cors/UpdateDB',
+      {
+          "operation": "UpdateSongList",
+          "user_name" : username, 
+          "track_id" : song_id,
+      });
+  
+      console.log(response.data[0]);
+    } catch (error) {
+      console.error('Error update data', error);
+    }
+  };
 
   const UpdateFunc = async () => {
     console.log(song_id);
@@ -72,7 +90,7 @@ const SongInfoComponent = ({ song_name, artist_name, album_name, track_num, popu
         <Button type="primary" onClick={UpdateFunc}>
             新增至資料庫
         </Button>
-        <Button type="primary" style={{ marginLeft: '20px'}} onClick={UpdateSongs}>
+        <Button type="primary" style={{ marginLeft: '20px'}} onClick={UpdateList}>
             加入歌單
         </Button>
       </Card>

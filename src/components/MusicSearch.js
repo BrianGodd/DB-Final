@@ -11,7 +11,7 @@ const MusicSearch = ({ onSearch }) => {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
-  const [key, setKey] = useState('BQAPFp2m1eTUJtm8JW4xE7RLmJibZwm1aWZWVJZlBi2_QXOZlETV2E9IS9BRi8a9LogI5FcC0omt-1wEP12HqEp5CEOcebXoL4FCOdQLyN1uFYUIxOyolDWkilj5xNCEk_whNI275IfcLlctnAG32UoT_-fXLHJJmP8DE8Z4LAVCVeXh1FfhZivz_S1JayUwQoEo_u9l1yoO1EJI');
+  const [key, setKey] = useState('BQBOzIJLq9it2sDN4BR9zQaBL5xZjyvPEgIvxFTWB6Evm9qDCXdhc66GriJPZ7h4bHH7GdEBYHROWsJ5zkHROIqt88e09rY8e6uaDEhXtCHiYOL9U-QS60bInQT8pISAGsM9qNwlCuILHLmuA6Jg2jWS2TMIhAeNw_Z1s-9ww0QDKbbPT52KpN8MRWUEoHP-cVqJhVW8BQPl0nlW');
   const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8');
   const [spotifyVUri, setSpotifyVUri] = useState("https://open.spotify.com/embed/track/0YTM7bCx451c6LQbkddy4Q?utm_source=generator");
 
@@ -75,7 +75,7 @@ const MusicSearch = ({ onSearch }) => {
       if(response.data.length > 0)
       {
         setSongs(
-          response.data.slice(0, 10).map((songData, index) => ({
+          response.data.map((songData, index) => ({
             id: songData.track_id,
             Album_id: "",
             Artist_id: "",

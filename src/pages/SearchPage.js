@@ -33,12 +33,18 @@ import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-
         break;
       case '2':
         // 每周排行榜的處理邏輯
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/Ranking");
         break;
       case '3':
         // 查詢歌曲的處理邏輯
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/Search");
         break;
       case '4':
         // 製作歌單的處理邏輯
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/PlayListPage");
         break;
       case '5':
         // 猜歌小遊戲的處理邏輯

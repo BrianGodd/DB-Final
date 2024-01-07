@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MusicSearch from '../components/MusicSearch';
 import SpotifyPlayerComponent from '../components/SpotifyPlayer';
+import PlayList from '../components/PlayList';
 import SearchPage from "./SearchPage";
 import GuessPage from "./GuessPage";
 import { ConfigProvider, Space } from 'antd';
@@ -28,21 +29,27 @@ function PlayListPage() {
   const SwitchPage = (item) => {
     switch (item.key) {
       case '1':
-        // 首頁
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/");
+        // 首頁的處理邏輯
         break;
       case '2':
-        // 每周排行榜
+        // 每周排行榜的處理邏輯
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/Ranking");
         break;
       case '3':
-        // 查詢歌曲
+        // 查詢歌曲的處理邏輯
         window.scrollTo(0, 0);
         navigate("/DB-Final/Search");
         break;
       case '4':
-        // 製作歌單
+        // 製作歌單的處理邏輯
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/PlayListPage");
         break;
       case '5':
-        // 猜歌小遊戲
+        // 猜歌小遊戲的處理邏輯
         window.scrollTo(0, 0);
         navigate("/DB-Final/Guess");
         break;
@@ -55,38 +62,40 @@ function PlayListPage() {
     <div className="PlayListPage">
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-        <h1 style={{ background: 'pink', color: 'black' ,padding: '20px', marginTop: '-2%'}}>user</h1>
+          <h1 style={{ background: 'pink', color: 'black', padding: '20px', marginTop: '-2%', textAlign: 'center' }}>
+            user
+          </h1>
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={['4']}
             items={[
-              {
-                key: '1',
-                icon: <UserOutlined />,
-                label: '首頁',
-              },
-              {
-                key: '2',
-                icon: <VideoCameraOutlined />,
-                label: '每周排行榜',
-              },
-              {
-                key: '3',
-                icon: <UploadOutlined />,
-                label: '查詢歌曲',
-              },
-              {
-                key: '4',
-                icon: <UploadOutlined />,
-                label: '製作歌單',
-              },
-              {
-                key: '5',
-                icon: <UploadOutlined />,
-                label: '猜歌小遊戲',
-              }
+                {
+                    key: '1',
+                    icon: <UserOutlined />,
+                    label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>首頁</span>,
+                  },
+                  {
+                    key: '2',
+                    icon: <VideoCameraOutlined />,
+                    label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>每周排行榜</span>,
+                  },
+                  {
+                    key: '3',
+                    icon: <UploadOutlined />,
+                    label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>查詢歌曲</span>,
+                  },
+                  {
+                    key: '4',
+                    icon: <UploadOutlined />,
+                    label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>製作歌單</span>,
+                  },
+                  {
+                    key: '5',
+                    icon: <UploadOutlined />,
+                    label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>猜歌小遊戲</span>,
+                  }
             ]}
             onClick={(item) => SwitchPage(item)}
           />
@@ -107,6 +116,15 @@ function PlayListPage() {
             <h1 style={{ marginLeft: '40%' }}>Music App</h1>
           </div>
           </Header>
+
+          
+          <div> <br/><br/> </div>
+          <div>
+          {/* <SpotifySearch /> */}
+          <PlayList/>
+          
+          {/* <p style={{position: 'absolute', top: '10px', left: '700px'}}>Update at 20240102</p> */}
+          </div>
         </Layout>
       </Layout>
       

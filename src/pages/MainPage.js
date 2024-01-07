@@ -3,6 +3,8 @@ import MusicSearch from '../components/MusicSearch';
 import SpotifyPlayerComponent from '../components/SpotifyPlayer';
 import SearchPage from "./SearchPage";
 import GuessPage from "./GuessPage";
+import RankPage from "./RankPage";
+import PlayListPage from "./PlayListPage";
 import { ConfigProvider, Space } from 'antd';
 import {
   MenuFoldOutlined,
@@ -28,10 +30,14 @@ function MainPage() {
   const SwitchPage = (item) => {
     switch (item.key) {
       case '1':
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/");
         // 首頁
         break;
       case '2':
         // 每周排行榜
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/Ranking");
         break;
       case '3':
         // 查詢歌曲
@@ -40,6 +46,8 @@ function MainPage() {
         break;
       case '4':
         // 製作歌單
+        window.scrollTo(0, 0);
+        navigate("/DB-Final/PlayListPage");
         break;
       case '5':
         // 猜歌小遊戲
@@ -55,7 +63,9 @@ function MainPage() {
     <div className="MainPage">
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-        <h1 style={{ background: 'pink', color: 'black' ,padding: '20px', marginTop: '-2%'}}>user</h1>
+        <h1 style={{ background: 'pink', color: 'black', padding: '20px', marginTop: '-2%', textAlign: 'center' }}>
+            user
+          </h1>
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
@@ -65,27 +75,27 @@ function MainPage() {
               {
                 key: '1',
                 icon: <UserOutlined />,
-                label: '首頁',
+                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>首頁</span>,
               },
               {
                 key: '2',
                 icon: <VideoCameraOutlined />,
-                label: '每周排行榜',
+                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>每周排行榜</span>,
               },
               {
                 key: '3',
                 icon: <UploadOutlined />,
-                label: '查詢歌曲',
+                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>查詢歌曲</span>,
               },
               {
                 key: '4',
                 icon: <UploadOutlined />,
-                label: '製作歌單',
+                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>製作歌單</span>,
               },
               {
                 key: '5',
                 icon: <UploadOutlined />,
-                label: '猜歌小遊戲',
+                label: <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>猜歌小遊戲</span>,
               }
             ]}
             onClick={(item) => SwitchPage(item)}
