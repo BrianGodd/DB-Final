@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import SpotifyPlayerComponent from './SpotifyPlayer';
 import SongInfoComponent from './SongInfo';
-import { Button, Flex , Radio, Spin } from 'antd';
+import { Button, Flex , Radio, Spin, Input } from 'antd';
 import { spotifyToken } from './UserData';
 
 const MusicSearch = ({ onSearch }) => {
@@ -235,25 +235,32 @@ const MusicSearch = ({ onSearch }) => {
 
   return (
     <div>
-      <input
+      <Input
         type="text"
         placeholder="Song name"
         value={songName}
         onChange={(e) => setSongName(e.target.value)}
+        style={{ width: '150px' , marginRight: '2%'}}
       />
-      <input
+
+      <Input
         type="text"
         placeholder="Artist name"
         value={artistName}
         onChange={(e) => setArtistName(e.target.value)}
+        style={{ width: '150px' , marginRight: '2%'}}
       />
-      <input
+
+      <Input
         type="text"
         placeholder="Album name"
         value={albumName}
         onChange={(e) => setAlbumName(e.target.value)}
+        style={{ width: '150px' , marginRight: '2%'}}
       />
-      <button onClick={handleSearch} >Search</button> 
+      <Button style={{ marginBottom: '15px' , marginTop: '50px',  background: '#FF5733', color: 'white'}} type="primary" onClick={handleSearch}>
+          Search
+        </Button>
       <p></p>
       <div>
         </div>

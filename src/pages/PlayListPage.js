@@ -65,9 +65,7 @@ function PlayListPage() {
     <div className="PlayListPage">
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-            <div  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '5%'}}>
-            <UserLogin/>
-            </div>
+            <UserLogin  isFix={true}/>
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
@@ -103,8 +101,8 @@ function PlayListPage() {
             onClick={(item) => SwitchPage(item)}
           />
         </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Layout   style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/Image/list.gif)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh' }}>
+          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' }}>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px'}}>
             <Button
               type="text"
@@ -116,7 +114,7 @@ function PlayListPage() {
                 height: 64,
               }}
             />
-            <h1 style={{ marginLeft: '40%' }}>Music App</h1>
+            <h1 style={{ marginLeft: '40%' }}>MyMusic</h1>
           </div>
           </Header>
 

@@ -14,10 +14,11 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, Card} from 'antd';
 import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import { UpdateToken } from '../components/UserData';
+import '../components/textFont.css';
 
 function MainPage() {
 
@@ -26,7 +27,6 @@ function MainPage() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
-  const imageUrl = require('../components/SpotifyPlayer.jpg').default;
   
   let navigate = useNavigate();
 
@@ -67,9 +67,7 @@ function MainPage() {
     <div className="MainPage">
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-            <div  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '5%'}}>
-            <UserLogin/>
-            </div>
+            <UserLogin isFix={true}/>
             
           <div className="demo-logo-vertical" />
           <Menu
@@ -106,8 +104,8 @@ function MainPage() {
             onClick={(item) => SwitchPage(item)}
           />
         </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Layout  style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/Image/menu.gif)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh' }}>
+          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' }}>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px'}}>
             <Button
               type="text"
@@ -119,10 +117,32 @@ function MainPage() {
                 height: 64,
               }}
             />
-            <h1 style={{ marginLeft: '40%' }}>Music App</h1>
+            <h1 style={{ marginLeft: '40%' }}>MyMusic</h1>
           </div>
           </Header>
-          <img src={imageUrl} alt="JPEG圖片" />
+            <Card title="最新資訊" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 
+            style={{ width: 300, backgroundColor: 'white', color: 'black' , marginTop: '20px', marginLeft: '38%', textAlign: 'center'}}>
+              <p className="custom-text">2024.1.8 version</p>
+            </Card>
+            <p></p>
+            <Card title="網頁介紹" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 
+            style={{ width: 300, backgroundColor: 'white', color: 'black' , marginTop: '20px', marginLeft: '38%', textAlign: 'center'}}>
+              
+              <p className="custom-text">鑒於網路上的猜歌網站尚未成熟，想利用資料庫期末專案的機會來打造一個能夠查歌、猜歌、收藏歌曲的網頁</p>
+              <p></p>
+              <hr style={{ width: '100%', margin: '20px 0' }} />
+              <p className="custom-text">未來展望：將添加動漫猜歌、猜歌計分榜、本日亞洲前三名歌曲等等功能，敬請期待！</p>
+            </Card>
+            <p></p>
+            <Card title="STAFF" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 
+            style={{ width: 300, backgroundColor: 'white', color: 'black' , marginTop: '20px', marginLeft: '38%', textAlign: 'center'}}>
+              <p className="custom-text">BrianGodd 黃永恩</p>
+              <p className="custom-text">Johnson7414 曾煥宗</p>
+              <p className="custom-text">Mr.振源 邱振源</p>
+              <p className="custom-text">Mr.紹幃 曾紹幃</p>
+              <p className="custom-text">Mr.彥佑 林彥佑</p>
+            </Card>
+            <p></p>
         </Layout>
       </Layout>
       

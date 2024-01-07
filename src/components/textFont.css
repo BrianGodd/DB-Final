@@ -1,0 +1,12 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+.custom-text {
+  font-size: 14px;
+  font-weight: 700; /* Regular weight */
+  color: #333;
+}

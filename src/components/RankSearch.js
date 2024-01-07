@@ -98,7 +98,7 @@ import React, { useState , useEffect } from 'react';
        <div> 
          <div> 
            <hr style={{ width: '100%', margin: '20px 0' }} /> 
-           <p style={{ fontWeight: 'bold', fontSize: '24px'}}>第{index+1}名</p>
+           <p style={{ fontWeight: 'bold', fontSize: '24px', color: 'white' }}>第{index + 1}名</p>
          </div> 
          <div key={index} style={{marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}> 
            <div style={{ marginRight: '-15px' }}></div> 
@@ -134,7 +134,10 @@ import React, { useState , useEffect } from 'react';
          </> 
          ) : 
          ( 
-           <> 
+           <>  
+           <div> 
+              <p style={{ fontWeight: 'bold', fontSize: '24px', color: 'white', marginTop: '-10px' }}>全球 Top50 排行榜</p>
+            </div> 
              {renderSongs()} 
            </> 
          ) 

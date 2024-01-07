@@ -83,7 +83,8 @@ const PlayList = ({ onSearch }) => {
       const dateB = new Date(b.addTime);
       return dateB - dateA;
     });
-  
+    if(listlen == 0) return(<div style={{ textAlign: 'center' , fontWeight: 'bold', fontSize: '24px'}}>無</div>);
+    
     return Array.from({ length: listlen }, (_, index) => (
       <div key={index}>
         <div> 
@@ -115,7 +116,7 @@ const PlayList = ({ onSearch }) => {
         ) :
         (
           <>
-            <p style={{ textAlign: 'center' }}>-----------------------------------------你的歌單-----------------------------------------</p>
+            <p style={{ textAlign: 'center' , fontWeight: 'bold', fontSize: '24px'}}>-----------------------------------------你的歌單-----------------------------------------</p>
             {renderSongs(listlen)}
           </>
         )

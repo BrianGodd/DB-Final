@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import SpotifyPlayerComponent from './SpotifyPlayer';
 import SongInfoComponent from './SongInfo';
-import { Button, Flex , Radio, Spin } from 'antd';
+import { Button, Flex , Radio, Spin, Input  } from 'antd';
 import { spotifyToken } from './UserData';
 
 const MusicGuess = ({ onSearch }) => {
@@ -409,27 +409,38 @@ const MusicGuess = ({ onSearch }) => {
 
   return (
     <div>
-      <input
+      <Input
         type="text"
         placeholder="Song name"
         value={songName}
         onChange={(e) => setSongName(e.target.value)}
+        style={{ width: '150px' , marginRight: '2%'}}
       />
-      <input
+
+      <Input
         type="text"
         placeholder="Artist name"
         value={artistName}
         onChange={(e) => setArtistName(e.target.value)}
+        style={{ width: '150px' , marginRight: '2%'}}
       />
-      <input
+
+      <Input
         type="text"
         placeholder="Album name"
         value={albumName}
         onChange={(e) => setAlbumName(e.target.value)}
+        style={{ width: '150px' , marginRight: '2%'}}
       />
       <p></p>
-      <Button style={{ marginRight: '10px' }} type="primary" onClick={setGuessFunc}>Guess from Spotify</Button>
-      <Button type="primary" onClick={setGuessDBFunc}>Guess from DB</Button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <Button style={{ marginBottom: '15px' , marginTop: '50px',  background: '#FF5733', color: 'white'}} type="primary" size="large" onClick={setGuessFunc}>
+          Guess from Spotify
+        </Button>
+        <Button style={{ marginBottom: '15px' , marginTop: '50px', background: '#FF5733', color: 'white'}} type="primary" size="large" onClick={setGuessDBFunc}>
+          Guess from DB
+        </Button>
+      </div>
       <div>
         {(guess || guessDB) && (
           <div>

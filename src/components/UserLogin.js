@@ -1,10 +1,10 @@
 // UserLogin.js
 import React, { useState , useEffect } from 'react';
 import { username, nickname, UpdateName} from './UserData';
-import { Button, Modal, Input, Form } from 'antd';
+import { Button, Modal, Input, Form , message } from 'antd';
 import axios from 'axios'; 
 
-const UserLogin = () => {
+const UserLogin = ({ isFix }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loginMode, setLoginMode] = useState(true); // true for login, false for register
   const [user_Name, SetUser_Name] = useState("");
@@ -28,6 +28,7 @@ const UserLogin = () => {
         console.log(response.data[0]);
         UpdateName(user_Name, user_NickName);
         SetLoginSuccess(true);
+        message.success('Welcome! You have successfully logged in.', 2);
       } catch (error) {
         console.error('Error update data', error);
         SetLoginSuccess(false);
@@ -49,12 +50,19 @@ const UserLogin = () => {
         {
             if(response.data[0].password_ == user_PassWord)
             {
+                message.success('Welcome! You have successfully logged in.', 2);
                 SetLoginSuccess(true);
                 UpdateName(user_Name, response.data[0].nickname);
                 //username = user_Name;
                 //nickname = response.data[0].nickname;
             }
-            else SetLoginSuccess(false);
+            else
+            {
+              message.error('Incorrect password or username. Please try again.', 2); 
+              console.log("wr");
+              UpdateName("", "");
+              SetLoginSuccess(false);
+            }
         } }catch (error) {
         console.error('Error fetching data', error);
         }
@@ -81,17 +89,23 @@ const UserLogin = () => {
 
   useEffect(() => {
       if(user_PassWord != "") SearchUser();
-      if(user_NickName != "") AddUser();
+      if(user_NickName != "" && loginMode == '註冊') AddUser();
   }, [user_PassWord, user_NickName]);
 
   return (
     <div>
-      {username === '' ? (
-        <Button style={{ marginTop: '10%', marginBottom: '10%', textAlign: 'center' }} type="primary" onClick={handleLogin}>
+      {(username == '' )? (
+        <Button style={{ marginTop: '10%', marginBottom: '10%', textAlign: 'center', marginLeft: (isFix)? '35%':'0%' }} type="primary" onClick={handleLogin}>
           登入
         </Button>
       ) : (
-        <h1 style={{ background: 'pink', color: 'black', padding: '20px', marginTop: '-2%', textAlign: 'center' }}>
+        <h1 style={{
+          background: 'linear-gradient(45deg, #ff6b8b, #ff9eb4)',
+          color: 'black',
+          padding: '20px',
+          marginTop: '-2%',
+          textAlign: 'center'
+        }}>
           {nickname} 歡迎~
         </h1>
       )}

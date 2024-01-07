@@ -63,7 +63,7 @@ import { UpdateToken } from '../components/UserData';
       <div className="App">
         <Layout>
           <Sider trigger={null} collapsible collapsed={collapsed}>
-            <UserLogin/>
+            <UserLogin  isFix={false}/>
             <div className="demo-logo-vertical" />
             <Menu
               theme="dark"
@@ -99,8 +99,8 @@ import { UpdateToken } from '../components/UserData';
               onClick={(item) => SwitchPage(item)}
             />
           </Sider>
-          <Layout>
-            <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Layout style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/Image/guess.gif)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh' }}>
+            <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' }}>
             <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px'}}>
               <Button
                 type="text"
@@ -112,7 +112,7 @@ import { UpdateToken } from '../components/UserData';
                   height: 64,
                 }}
               />
-              <h1 style={{ marginLeft: '40%' }}>Music App</h1>
+              <h1 style={{ marginLeft: '40%' }}>MyMusic</h1>
             </div>
             </Header>
         
