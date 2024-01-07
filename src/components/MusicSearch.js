@@ -1,7 +1,8 @@
 import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import SpotifyPlayerComponent from './SpotifyPlayer';
-import { Button, Flex , Radio} from 'antd';
+import SongInfoComponent from './SongInfo';
+import { Button, Flex , Radio, Spin } from 'antd';
 
 const MusicSearch = ({ onSearch }) => {
   const [searchName, setSearchName] = useState('All I Want for Christmas Is You');
@@ -10,47 +11,96 @@ const MusicSearch = ({ onSearch }) => {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
-  const [key, setKey] = useState('BQAoSjaFR0zivcIwMvAvcBzTCGoXVFcgyAmCyI3fN59eFvZEDzZ38OoiTdqBiJmOr4kKsPLXp9RLYdHYFrqhn11rpppzAGrl-bzhG26-CjQvpEibnMCXkQv3faSXuPq7wjCqj2F0cO6fgJsX46ETa-Gh_Sg9J1KfVm5ujpqD2KJ5yDVEhb9VlB0-08X3esLR5ikKZqdqpbuOWEJK');
-  const [guess, setGuess] = useState(false);
-  const [guessDB, setGuessDB] = useState(false);
-  const [id, setID] = useState('0YTM7bCx451c6LQbkddy4Q');
+  const [key, setKey] = useState('BQAPFp2m1eTUJtm8JW4xE7RLmJibZwm1aWZWVJZlBi2_QXOZlETV2E9IS9BRi8a9LogI5FcC0omt-1wEP12HqEp5CEOcebXoL4FCOdQLyN1uFYUIxOyolDWkilj5xNCEk_whNI275IfcLlctnAG32UoT_-fXLHJJmP8DE8Z4LAVCVeXh1FfhZivz_S1JayUwQoEo_u9l1yoO1EJI');
   const [spotifyUri, setSpotifyUri] = useState('https://open.spotify.com/track/0YTM7bCx451c6LQbkddy4Q?si=f85f4b06e1f54cb8');
   const [spotifyVUri, setSpotifyVUri] = useState("https://open.spotify.com/embed/track/0YTM7bCx451c6LQbkddy4Q?utm_source=generator");
 
-  const [trackName, setTrackName] = useState('');
-  const [options, setOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [answerStatus, setAnswerStatus] = useState(null);
-  const [answered, setAnswered] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchSpotify, setSearchSpotify] = useState(false);
 
-  const fetchData = async () => {
-    console.log((guessDB)? 0:1);
+  //搜尋結果
+  const [id, setID] = useState('0YTM7bCx451c6LQbkddy4Q');
+  const [track_Name, setTrack_Name] = useState('');
+  const [track_Artist, setTrack_Artist] = useState('');
+  const [track_Album, setTrack_Album] = useState('');
+  const [track_Num, setTrack_Num] = useState(0);
+  const [track_Popularity, setTrack_Popularity] = useState(0);
+  const [track_Time, setTrack_Time] = useState(0);
+  const [track_Year, setTrack_Year] = useState('');
+  //
+
+  //改為陣列版本
+  const TrackInfo = {
+    id: '',
+    Album_id: '',
+    Artist_id: '',
+    track_Name: '',
+    track_Artist: '',
+    track_Album: '',
+    track_Num: 0,
+    track_Popularity: 0,
+    track_Time: 0,
+    track_Year: '',
+  };
+  const [songs, setSongs] = useState(Array(10).fill({ TrackInfo }));
+
+  const SearchSong = async () => {
+    setLoading(true);
+    setSearchSpotify(false);
+    //console.log((guessDB)? 0:1);
     try {
-      const response = await axios.get('http://localhost:8080/api/data', {
+      const response = await axios.get('http://localhost:8080/api/data/query_search_song', {
         params: {
-          songName: searchName,
-          songArtist: searchArtist,
-          songAlbum: searchAlbum,
-          status: (guessDB)? 0:1
+          song: searchName,
+          artist: searchArtist,
+          album: searchAlbum
+          //status: (guessDB)? 0:1
         }
       });
   
-      console.log(response.data[0].track_id);
+      /*console.log(response.data[0].track_id);
       setID(response.data[0].track_id);
+      setTrack_Name(response.data[0].track_name);
+      setTrack_Artist(response.data[0].artist_name);
+      setTrack_Album(response.data[0].album_name);
+      setTrack_Num(response.data[0].track_number);
+      setTrack_Popularity(response.data[0].popularity);
+      setTrack_Time(Math.round(parseInt(response.data[0].duration_ms)/1000));
+      setTrack_Year((response.data[0].year).toString().split("T")[0]);
       setSongName("");
       setArtistName("");
-      setAlbumName("");
+      setAlbumName("");*/
+
+      //改為陣列版本
+      if(response.data.length > 0)
+      {
+        setSongs(
+          response.data.slice(0, 10).map((songData, index) => ({
+            id: songData.track_id,
+            Album_id: "",
+            Artist_id: "",
+            track_Name: songData.track_name,
+            track_Artist: songData.artist_name,
+            track_Album: songData.album_name,
+            track_Num: songData.track_number,
+            track_Popularity: songData.popularity,
+            track_Time: Math.round(parseInt(songData.duration_ms) / 1000),
+            track_Year: songData.year.toString().split('T')[0],
+          })));
+        }
+        else
+        {
+          setSearchSpotify(true);
+          searchBySpotify();
+        }
     } catch (error) {
+      setSearchSpotify(true);
       searchBySpotify();
       console.error('Error fetching data', error);
+    }finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    // This effect will run whenever spotifyUri is updated
-    setSpotifyUri(`https://open.spotify.com/track/${id}?si=f85f4b06e1f54cb8`);
-    setSpotifyVUri(`https://open.spotify.com/track/${id}?utm_source=generator`);
-  }, [spotifyUri, spotifyVUri, id]);
 
   const searchBySpotify = async () => {
     let query = '';
@@ -73,7 +123,7 @@ const MusicSearch = ({ onSearch }) => {
       query = `artist:yoasobi`;//genre:j-pop year:2023
     }*/
   
-    const token = key//'BQC6vssIEWTaZ1MZHQeSMA56hacecrKORTSIpzAXqUJFsQeQywnMtAUo27aLDfJEyKgb8xH9uj3XZ35wuPKxZQaqaJ1jwJFJXohJa9FEHpgPa9IFNHHxkq2_7vceTYi-bOsePTLm1BwCfKlPNDOKxKr-wybi0qfmotN71oMloKyL9PGUP3ZIUpqPiBvvNEq5AmzFwTaAJmdfR3Me';
+    const token = key;
     const market = '';
 
     try {
@@ -91,48 +141,37 @@ const MusicSearch = ({ onSearch }) => {
       const response = await axios(options);
   
       if (response.data.tracks && response.data.tracks.items && response.data.tracks.items.length > 0) {
-        const filteredTracks = response.data.tracks.items.filter(track => track.popularity >= 20);
-        const ind = Math.floor(Math.random() * filteredTracks.length);
-        const track = (guess)? filteredTracks[ind]:response.data.tracks.items[0];
+        //const filteredTracks = response.data.tracks.items.filter(track => track.popularity >= 20);
+        //const ind = Math.floor(Math.random() * filteredTracks.length);
+        /*
+        let track = (guess)? filteredTracks[ind]:response.data.tracks.items[0];
         setID(track.id);
-        setTrackName(track.name);
-        if(!guess)
-        {
-          setSongName("");
-          setArtistName("");
-          setAlbumName("");
-        }
-        if(guess)
-        {
-          const optionsData = [];
+        setTrack_Name(track.name);
+        setTrack_Artist(track.artists.map(artist => artist.name).join(" / "));
+        setTrack_Album(track.album.name);
+        setTrack_Num(track.track_number);
+        setTrack_Popularity(track.popularity);
+        setTrack_Time(Math.round(parseInt(track.duration_ms)/1000));
+        setTrack_Year((track.album.release_date.split("T")[0]).toString());
 
-          // Get three random indices without repetition
-          const randomIndices = [];
-          while (randomIndices.length < 3) {
-            const randomIndex = Math.floor(Math.random() * filteredTracks.length);
-            if (!randomIndices.includes(randomIndex) && filteredTracks[randomIndex].name != track.name) {
-              randomIndices.push(randomIndex);
-            }
-          }
+        setTrackName(track.name);*/
 
-          // Add the names corresponding to the random indices
-          randomIndices.forEach(index => {
-            console.log(index);
-            optionsData.push(filteredTracks[index].name);
-          });
-
-          // Add the actual track name
-          optionsData.push(track.name);
-
-          // Shuffle the optionsData array
-          for (let i = optionsData.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [optionsData[i], optionsData[j]] = [optionsData[j], optionsData[i]];
-          }
-
-          setOptions(optionsData);
-        }
-        console.log(track);
+        const track = response.data.tracks.items;
+        console.log(searchArtist);
+        setSongs(
+          track.slice(0, 10).map((songData, index) => ({
+            id: songData.id,
+            Album_id: (searchAlbum != "")?songData.album.id :"",
+            Artist_id: (searchArtist != "")?songData.artists.id :"",
+            track_Name: songData.name,
+            track_Artist: songData.artists.map(artist => artist.name).join(" / "),
+            track_Album: songData.album.name,
+            track_Num: songData.track_number,
+            track_Popularity: songData.popularity,
+            track_Time: Math.round(parseInt(songData.duration_ms) / 1000),
+            track_Year: (songData.album.release_date.split("T")[0]).toString(),
+          })));
+          console.log(songs[0].Artist_id);
       } else {
         console.log('No results found.');
       }
@@ -149,88 +188,48 @@ const MusicSearch = ({ onSearch }) => {
     //console.log(spotifyUri);
   };
 
-  const setGuessFunc = async () => {
-    if(guess)
-    {
-      setGuess(false);
-    }
-    else
-    {
-      setGuess(true);
-    }
-  };
-
-  const setGuessDBFunc = async () => {
-    if(guessDB)
-    {
-      setGuessDB(false);
-    }
-    else
-    {
-      setGuessDB(true);
-    }
-  };
-
-  const handleNextQuestion = () => {
-    setAnswered(false);
-    setAnswerStatus(null); 
-    searchBySpotify();
-  };
-
-  const handleEndGuess = () => {
-    setGuess(false);
-    setGuessDB(false);
-    setAnswered(false);
-    setAnswerStatus(null);
-  };
+  useEffect(() => {
+    // This effect will run whenever spotifyUri is updated
+    setSpotifyUri(`https://open.spotify.com/track/${id}?si=f85f4b06e1f54cb8`);
+    setSpotifyVUri(`https://open.spotify.com/track/${id}?utm_source=generator`);
+  }, [spotifyUri, spotifyVUri, id]);
 
   useEffect(() => {
     // This effect will run whenever searchName changes
-    fetchData();
+    SearchSong();
   }, [searchName, searchArtist, searchAlbum]);
 
-  useEffect(() => {
-    // This effect will run whenever guess changes
-    if (guess) {
-      setAnswered(false);
-      searchBySpotify();
-    }
-    else if(guessDB)
-    {
-      fetchData();
-    }
-  }, [guess, guessDB]);
-
-  useEffect(() => {
-    // Update options when guess is true
-    if (guess) {
-      // Fetch options logic
-      // Assume that optionsData is an array of track names
-      setSelectedOption(null);
-      setAnswerStatus(null);
-    }
-  }, [guess]);
-
-  useEffect(() => {
-    setAnswered(false);
-  }, [guess]);
-
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
+  const renderSongs = () => {
+    let UP_status = 0;
+    if(searchName != "") UP_status += 1;
+    if(searchAlbum != "") UP_status += 2;
+    if(searchArtist != "") UP_status += 3;
+    return songs.map((song, index) => (
+      <div>
+        <div>
+          <hr style={{ width: '100%', margin: '20px 0' }} />
+        </div>
+        <div key={index} style={{marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ marginRight: '-15px' }}></div>
+          <SpotifyPlayerComponent uri={`https://open.spotify.com/track/${song.id}`} guess={false} />
+          <div style={{ marginRight: '10px' }}></div>
+          <div><SongInfoComponent
+            song_name={song.track_Name}
+            artist_name={song.track_Artist}
+            album_name={song.track_Album}
+            track_num={song.track_Num}
+            popularity={song.track_Popularity}
+            time={song.track_Time}
+            year={song.track_Year}
+            song_id={song.id}
+            artist_id={song.Artist_id}
+            album_id={song.Album_id}
+          /></div>
+          <div> <br/><br/> </div>
+        </div>
+      </div>
+    ));
   };
-
-  const handleSubmit = () => {
-    // Compare the selected option with the actual track name
-    // Assume actualTrackName is the actual track name from Spotify
-    const actualTrackName = trackName; // Replace this with the actual track name
-    if (selectedOption === actualTrackName) {
-      setAnswerStatus('恭喜答對');
-    } else {
-      setAnswerStatus(`正確答案：${actualTrackName}`);
-    }
-    setAnswered(true);
-  };
-  
 
   return (
     <div>
@@ -254,37 +253,31 @@ const MusicSearch = ({ onSearch }) => {
       />
       <button onClick={handleSearch} >Search</button> 
       <p></p>
-      <Button style={{ marginRight: '10px' }} type="primary" onClick={setGuessFunc}>Guess from Spotify</Button>
-      <Button type="primary" onClick={setGuessDBFunc}>Guess from DB</Button>
       <div>
-        {guess && (
-          <div>
-            <Radio.Group onChange={handleOptionChange} value={selectedOption}>
-              {options.map((option, index) => (
-                <Radio key={index} value={option}>
-                  {option}
-                </Radio>
-              ))}
-            </Radio.Group>
-            <p></p>
-            <Button style={{ marginRight: '10px' }} type="primary" onClick={handleSubmit}>
-              送出
-            </Button>
-            {answerStatus && <p>{answerStatus}</p>}
-            {answerStatus && (
-              <>
-                <Button style={{ marginRight: '10px' }} type="primary" onClick={handleNextQuestion}>
-                  下一題
-                </Button>
-                <Button style={{ marginRight: '10px' }} type="primary" onClick={handleEndGuess}>
-                  結束猜題
-                </Button>
-            </>
-            )}
-          </div>
-        )}
         </div>
-      {<SpotifyPlayerComponent uri={spotifyUri} guess={(guess || guessDB) && !answered} />}
+        <div style={{ marginTop: (loading)? '20px': '0px'}}>
+        {loading ? (
+        <>
+          <p> 請稍候，資料載入中...</p>
+          <Spin size="large" />
+        </>
+        ) :
+        (
+          <>
+            {searchSpotify? (
+              <>
+                  <p > ಥ⌣ಥ 無搜尋結果 ಥ⌣ಥ</p>
+                  <p>-----------------------------------------Spotify推薦結果如下-----------------------------------------</p>
+                  <p ></p>
+              </>
+            )
+            :<p ></p>
+            }
+            {renderSongs()}
+          </>
+        )
+        }
+      </div>
       
       <p></p>
       <input

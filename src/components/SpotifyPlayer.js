@@ -22,19 +22,16 @@ const SpotifyPlayerComponent = ({uri, guess }) => {
 
   return (
     <div className="spotify-container">
-      <div> <br/><br/> </div>
       {embedURL && (
         <>
           {guess && <div className="black-overlay"></div>}
 
-          {guess && <div className="black-overlay-2"></div>}
-
           {/* Customized content inside the iframe */}
           <iframe
-            style={{ borderRadius: '12px' }}
+            style={{ borderRadius: '12px' , marginLeft: (guess)? '-85%': '0%'}}
             src={embedURL}
-            width="40%"
-            height="352"
+            width="380"
+            height= {(guess)? "100":"352"} //100
             frameBorder="0"
             allowFullScreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -43,11 +40,15 @@ const SpotifyPlayerComponent = ({uri, guess }) => {
           ></iframe>
 
           <div> <br/><br/> </div>
+          {!guess &&
+            <div>
           <Button type="primary">
             <a href={uri} target="_blank" rel="noopener noreferrer">
               Open on Spotify
             </a>
           </Button>
+          </div>
+          }
         </>
       )}
     </div>
