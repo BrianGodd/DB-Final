@@ -136,7 +136,7 @@ import React, { useState , useEffect } from 'react';
          ( 
            <>  
            <div> 
-              <p style={{ fontWeight: 'bold', fontSize: '24px', color: 'white', marginTop: '-10px' }}>全球 Top50 排行榜</p>
+              <p style={{ fontWeight: 'bold', fontSize: '24px', color: 'white', marginTop: '-10px' }}>全球 Top10 排行榜</p>
             </div> 
              {renderSongs()} 
            </> 

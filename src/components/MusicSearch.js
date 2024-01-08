@@ -6,9 +6,11 @@ import { Button, Flex , Radio, Spin, Input } from 'antd';
 import { spotifyToken } from './UserData';
 
 const MusicSearch = ({ onSearch }) => {
-  const [searchName, setSearchName] = useState('All I Want for Christmas Is You');
-  const [searchArtist, setsearchArtist] = useState('Mariah Carey');
-  const [searchAlbum, setSearchAlbum] = useState('Merry Christmas');
+  const [searchAnime, setSearchAnime] = useState('');
+  const [searchName, setSearchName] = useState('');
+  const [searchArtist, setsearchArtist] = useState('');
+  const [searchAlbum, setSearchAlbum] = useState('');
+  const [animeName, setAnimeName] = useState('');
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
   const [albumName, setAlbumName] = useState('');
@@ -43,8 +45,76 @@ const MusicSearch = ({ onSearch }) => {
     track_Time: 0,
     track_Year: '',
   };
-  const [songs, setSongs] = useState(Array(10).fill({ TrackInfo }));
+  const [songs, setSongs] = useState(Array(0).fill({ TrackInfo }));
 
+  const SearchAnim = async () => {
+    let query = searchAnime;
+    const market = '';
+
+    try {
+      const options = {
+        method: 'GET',
+        url: `https://api.spotify.com/v1/search?q=${query}&type=playlist${market}`,//&market=ES
+        headers: {
+          'Authorization': `Bearer ${key}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
+      
+      console.log(`https://api.spotify.com/v1/search?q=${query}&type=playlist${market}`);
+      const response = await axios(options);
+  
+      if (response.data.playlists && response.data.playlists.items && response.data.playlists.items.length > 0) 
+      {
+        const playlist_id = response.data.playlists.items[0].id;
+        console.log(response.data.playlists.items[0].id);
+
+        try {
+          const options = {
+            method: 'GET',
+            url: `https://api.spotify.com/v1/playlists/${playlist_id}`,//&market=ES
+            headers: {
+              'Authorization': `Bearer ${key}`,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+          };
+          
+          console.log(`https://api.spotify.com/v1/playlists/${playlist_id}`);
+          const response = await axios(options); 
+          console.log(response.data.tracks.items);
+      
+          if (response.data.tracks && response.data.tracks.items && response.data.tracks.items.length > 0) { 
+            
+            const track = response.data.tracks.items; 
+            setSongs( 
+              track.map((songData, index) => ({ 
+                id: songData.track.id, 
+                Album_id: songData.track.album.id, 
+                Artist_id: songData.track.artists.id, 
+                track_Name: songData.track.name, 
+                track_Artist: songData.track.artists.map(artist => artist.name).join(" / "), 
+                track_Album: songData.track.album.name, 
+                track_Num: songData.track.track_number, 
+                track_Popularity: songData.track.popularity, 
+                track_Time: Math.round(parseInt(songData.track.duration_ms) / 1000), 
+                track_Year: (songData.track.album.release_date.split("T")[0]).toString(), 
+              }))); 
+              console.log(songs[0].Artist_id); 
+          }else {
+            console.log('No results found.');
+          }
+        } catch (error) {
+          console.error('Error searching Spotify:', error);
+        };
+      } else {
+        console.log('No results found.');
+      }
+    } catch (error) {
+      console.error('Error searching Spotify:', error);
+    };
+  };
 
   const SearchSong = async () => {
     setLoading(true);
@@ -186,6 +256,7 @@ const MusicSearch = ({ onSearch }) => {
     setSearchName(songName);
     setsearchArtist(artistName);
     setSearchAlbum(albumName);
+    setSearchAnime(animeName);
     //fetchData();
     //console.log(spotifyUri);
   };
@@ -198,14 +269,12 @@ const MusicSearch = ({ onSearch }) => {
 
   useEffect(() => {
     // This effect will run whenever searchName changes
-    SearchSong();
-  }, [searchName, searchArtist, searchAlbum]);
+    if(searchName == '' && searchArtist == '' && searchAlbum == '' && animeName == '') return;
+    if(searchAnime) SearchAnim();
+    else SearchSong();
+  }, [searchName, searchArtist, searchAlbum, searchAnime]);
 
   const renderSongs = () => {
-    let UP_status = 0;
-    if(searchName != "") UP_status += 1;
-    if(searchAlbum != "") UP_status += 2;
-    if(searchArtist != "") UP_status += 3;
     return songs.map((song, index) => (
       <div>
         <div>
@@ -262,6 +331,13 @@ const MusicSearch = ({ onSearch }) => {
           Search
         </Button>
       <p></p>
+      <Input
+        type="text"
+        placeholder="Anime name"
+        value={animeName}
+        onChange={(e) => setAnimeName(e.target.value)}
+        style={{ width: '150px' , marginRight: '7.5%'}}
+      />
       <div>
         </div>
         <div style={{ marginTop: (loading)? '20px': '0px'}}>
@@ -282,7 +358,7 @@ const MusicSearch = ({ onSearch }) => {
             )
             :<p ></p>
             }
-            {renderSongs()}
+            {(songs.length != 0)? renderSongs():null}
           </>
         )
         }
@@ -294,3 +370,50 @@ const MusicSearch = ({ onSearch }) => {
 };
 
 export default MusicSearch;
+// let openingSongs = [], endingSongs = [];
+    // try {
+    //   const response = await axios.get('https://api.jikan.moe/v4/anime/1735/themes');
+    //   const openings = response.data.data.openings;
+    //   console.log( response.data.data.openings);
+    //     openingSongs = await Promise.all(openings.slice(0, 10).map(async (opening, index) => {
+    //     const regex = /"([^"]+)" by ([^(]+)/;
+    //     const matches = opening.match(regex);
+    //     const songTitle = matches ? matches[1] : null;
+    //     const artistName = matches ? matches[2] : null;
+  
+    //     try {
+    //       const options = {
+    //         method: 'GET',
+    //         url: `https://api.spotify.com/v1/search?q=${songTitle}&type=track%2Cartist&market=JP`,//%2C${artistName}
+    //         headers: {
+    //           'Authorization': `Bearer ${key}`,
+    //           'Accept': 'application/json',
+    //           'Content-Type': 'application/json',
+    //         },
+    //       };
+  
+    //       const sresponse = await axios(options);
+    //       const sres = sresponse.data.tracks.items[index];
+  
+    //       return {
+    //         id: sres.id,
+    //         Album_id: (searchAlbum != "") ? sres.album.id : "",
+    //         Artist_id: (searchArtist != "") ? sres.artists.id : "",
+    //         track_Name: sres.name,
+    //         track_Artist: sres.artists.map(artist => artist.name).join(" / "),
+    //         track_Album: sres.album.name,
+    //         track_Num: sres.track_number,
+    //         track_Popularity: sres.popularity,
+    //         track_Time: Math.round(parseInt(sres.duration_ms) / 1000),
+    //         track_Year: (sres.album.release_date.split("T")[0]).toString(),
+    //       };
+    //     } catch (error) {
+    //       console.error('Error searching Spotify:', error);
+    //     }
+    //   }));
+  
+    //   setSongs(openingSongs);
+  
+    // } catch (error) {
+    //   console.error('Error fetching data', error);
+    // }

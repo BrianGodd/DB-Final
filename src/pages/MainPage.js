@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  , useEffect } from 'react';
 import MusicSearch from '../components/MusicSearch';
 import SpotifyPlayerComponent from '../components/SpotifyPlayer';
 import UserLogin from '../components/UserLogin';
@@ -30,10 +30,15 @@ function MainPage() {
   
   let navigate = useNavigate();
 
+  useEffect(() => {
+    UpdateToken();
+  }, []);
+
   const SwitchPage = (item) => {
     UpdateToken();
     switch (item.key) {
       case '1':
+        window.location.reload();
         window.scrollTo(0, 0);
         navigate("/DB-Final/");
         // 首頁
@@ -122,7 +127,10 @@ function MainPage() {
           </Header>
             <Card title="最新資訊" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 
             style={{ width: 300, backgroundColor: 'white', color: 'black' , marginTop: '20px', marginLeft: '38%', textAlign: 'center'}}>
-              <p className="custom-text">2024.1.8 version</p>
+              <p className="custom-text">2024.1.9 version</p>
+              <hr style={{ width: '100%', margin: '20px 0' }} />
+              <p className="custom-text">{'<注意>'}</p>
+              <p className="custom-text">1. 加入歌單前請先加入資料庫，謝謝！</p>
             </Card>
             <p></p>
             <Card title="網頁介紹" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 
@@ -131,7 +139,7 @@ function MainPage() {
               <p className="custom-text">鑒於網路上的猜歌網站尚未成熟，想利用資料庫期末專案的機會來打造一個能夠查歌、猜歌、收藏歌曲的網頁</p>
               <p></p>
               <hr style={{ width: '100%', margin: '20px 0' }} />
-              <p className="custom-text">未來展望：將添加動漫猜歌、猜歌計分榜、本日亞洲前三名歌曲等等功能，敬請期待！</p>
+              <p className="custom-text">未來展望：將添加猜歌計分榜、本日亞洲前三名歌曲等等功能，敬請期待！</p>
             </Card>
             <p></p>
             <Card title="STAFF" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 

@@ -1,6 +1,6 @@
 // src/components/SongInfo.js
 import React, { useState } from 'react';
-import { Button, Card } from 'antd';
+import { Button, Card , message} from 'antd';
 import axios from 'axios';
 import { username, nickname } from './UserData';
 
@@ -21,6 +21,7 @@ const SongInfoComponent = ({ song_name, artist_name, album_name, track_num, popu
       });
   
       console.log(response.data[0]);
+      message.success('Successful add to your songlist!', 2);
     } catch (error) {
       console.error('Error update data', error);
     }
@@ -44,6 +45,7 @@ const SongInfoComponent = ({ song_name, artist_name, album_name, track_num, popu
       });
   
       console.log(response.data[0]);
+      message.success('Successful add to database. Thanks!', 2);
     } catch (error) {
       console.error('Error update data', error);
     }

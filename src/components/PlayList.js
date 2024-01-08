@@ -116,7 +116,7 @@ const PlayList = ({ onSearch }) => {
         ) :
         (
           <>
-            <p style={{ textAlign: 'center' , fontWeight: 'bold', fontSize: '24px'}}>-----------------------------------------你的歌單-----------------------------------------</p>
+            <p style={{ textAlign: 'center' , fontWeight: 'bold', fontSize: '24px'}}>{(nickname != "")? nickname : "你"}的歌單</p>
             {renderSongs(listlen)}
           </>
         )
