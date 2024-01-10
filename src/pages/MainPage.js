@@ -1,6 +1,7 @@
 import React, { useState  , useEffect } from 'react';
 import MusicSearch from '../components/MusicSearch';
 import SpotifyPlayerComponent from '../components/SpotifyPlayer';
+import SpotifyPlayBack from '../components/SpotifyPlayBack';
 import UserLogin from '../components/UserLogin';
 import SearchPage from "./SearchPage";
 import GuessPage from "./GuessPage";
@@ -14,10 +15,10 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Card} from 'antd';
+import { Layout, Menu, Button, theme, Card, Input} from 'antd';
 import {BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
-import { UpdateToken } from '../components/UserData';
+import { UpdateToken , spotifyPlayToken, UpdateSpotifyPlay} from '../components/UserData';
 import '../components/textFont.css';
 
 function MainPage() {
@@ -27,6 +28,7 @@ function MainPage() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
+  const [PlayKey, setPlayKey] = useState('');
   
   let navigate = useNavigate();
 
@@ -65,6 +67,13 @@ function MainPage() {
         break;
       default:
         break;
+    }
+  };
+
+  const handleEnterPress = (e) => {
+    if (e.key === 'Enter' && PlayKey != '') {
+      console.log(PlayKey);
+      UpdateSpotifyPlay(PlayKey);
     }
   };
 
@@ -108,10 +117,11 @@ function MainPage() {
             ]}
             onClick={(item) => SwitchPage(item)}
           />
+          
         </Sider>
         <Layout  style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/Image/menu.gif)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh' }}>
-          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px'}}>
+          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' , height: '82px'}}>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '-10px'}}>
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -127,10 +137,22 @@ function MainPage() {
           </Header>
             <Card title="最新資訊" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 
             style={{ width: 300, backgroundColor: 'white', color: 'black' , marginTop: '20px', marginLeft: '38%', textAlign: 'center'}}>
-              <p className="custom-text">2024.1.9 version</p>
+              <p className="custom-text">2024.1.11 version</p>
               <hr style={{ width: '100%', margin: '20px 0' }} />
               <p className="custom-text">{'<注意>'}</p>
               <p className="custom-text">1. 加入歌單前請先加入資料庫，謝謝！</p>
+              <hr style={{ width: '100%', margin: '20px 0' }} />
+              <a href={'https://developer.spotify.com/documentation/web-playback-sdk/tutorials/getting-started'} target="_blank" rel="noopener noreferrer">
+              Help Get Key
+              </a>
+              <Input
+                type="text"
+                placeholder={spotifyPlayToken}
+                value={PlayKey}
+                onChange={(e) => setPlayKey(e.target.value)}
+                onKeyDown={handleEnterPress}
+                style={{ width: '150px' , marginLeft: '10px'}}
+              />
             </Card>
             <p></p>
             <Card title="網頁介紹" bordered={true} headStyle={{ background: 'linear-gradient(to right, #FFD700, #FF6347)', color: 'black' }} 

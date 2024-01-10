@@ -100,8 +100,8 @@ import { UpdateToken } from '../components/UserData';
             />
           </Sider>
           <Layout style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/Image/guess.gif)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh' }}>
-            <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px'}}>
+          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' , height: '82px'}}>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '-10px'}}>
               <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

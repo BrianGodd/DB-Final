@@ -3,7 +3,7 @@ import axios from 'axios';
 import SpotifyPlayerComponent from './SpotifyPlayer';
 import SongInfoComponent from './SongInfo';
 import { Button, Flex , Radio, Spin, Input } from 'antd';
-import { spotifyToken } from './UserData';
+import { spotifyToken, UpdateUris } from './UserData';
 
 const MusicSearch = ({ onSearch }) => {
   const [searchAnime, setSearchAnime] = useState('');
@@ -274,6 +274,12 @@ const MusicSearch = ({ onSearch }) => {
     else SearchSong();
   }, [searchName, searchArtist, searchAlbum, searchAnime]);
 
+  const PlaySongs = async () => {
+    //UpdateUris(['3J99JXowSczha1Cp0LtFoc']);
+    const ids = songs.map(song => song.id);
+    UpdateUris(ids);
+  }
+
   const renderSongs = () => {
     return songs.map((song, index) => (
       <div>
@@ -349,6 +355,11 @@ const MusicSearch = ({ onSearch }) => {
         ) :
         (
           <>
+            {(songs.length > 0)? (
+            <Button style={{ marginBottom: '15px' , marginTop: '50px',  background: '#FF5733', color: 'white'}} type="primary" onClick={PlaySongs}>
+              PlayAll
+            </Button>):null
+            }
             {searchSpotify? (
               <>
                   <p > ಥ⌣ಥ 無搜尋結果 ಥ⌣ಥ</p>

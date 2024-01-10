@@ -4,7 +4,7 @@ import SpotifyPlayerComponent from './SpotifyPlayer';
 import SongInfoComponent from './SongInfo';
 import { Button, Flex , Radio, Spin } from 'antd';
 import { username, nickname } from './UserData';
-import { spotifyToken } from './UserData';
+import { spotifyToken, UpdateUris } from './UserData';
 
 const PlayList = ({ onSearch }) => {
   const [searchName, setSearchName] = useState('All I Want for Christmas Is You');
@@ -100,6 +100,12 @@ const PlayList = ({ onSearch }) => {
     ));
   };
 
+  const PlaySongs = async () => {
+    //UpdateUris(['3J99JXowSczha1Cp0LtFoc']);
+    const ids = songs.map(song => song.id);
+    UpdateUris(ids);
+  }
+
   return (
     <div> 
       <p></p>
@@ -115,7 +121,15 @@ const PlayList = ({ onSearch }) => {
         </>
         ) :
         (
+          
           <>
+            {(songs.length > 0)? (
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button style={{ background: '#FF5733', color: 'white' }} type="primary" onClick={PlaySongs}>
+                  PlayAll
+                </Button>
+              </div>):null
+            }
             <p style={{ textAlign: 'center' , fontWeight: 'bold', fontSize: '24px'}}>{(nickname != "")? nickname : "你"}的歌單</p>
             {renderSongs(listlen)}
           </>

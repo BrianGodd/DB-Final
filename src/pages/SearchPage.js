@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MusicSearch from '../components/MusicSearch';
 import SpotifyPlayerComponent from '../components/SpotifyPlayer';
+import SpotifyPlayBack from '../components/SpotifyPlayBack';
 import UserLogin from '../components/UserLogin';
 import { ConfigProvider, Space } from 'antd';
 import {
@@ -98,10 +99,12 @@ import { UpdateToken } from '../components/UserData';
             ]}
             onClick={(item) => SwitchPage(item)}
           />
+          
+          
         </Sider>
         <Layout style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/Image/search.gif)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '100vh' }}>
-          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px'}}>
+          <Header style={{ padding: 0, background: 'linear-gradient(to right, #e6ffc2, #80d4ff)' , height: '82px'}}>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '-10px'}}>
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
