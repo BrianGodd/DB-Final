@@ -62,7 +62,7 @@ const UpdateToken = async () => {
 const UpdateSpotifyPlay = async (newToken) => {
   console.log(newToken);
   spotifyPlayToken = newToken;
-  setUpdateTokenisCallback(newToken);
+  updateTokenCallback(newToken);
 }
   
 
