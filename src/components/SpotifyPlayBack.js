@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'antd';
 import SpotifyPlayer from 'react-spotify-web-playback';
-import { uris, setUpdateUrisCallback , spotifyPlayToken, spotifyToken } from './UserData';
+import { uris, setUpdateUrisCallback , spotifyPlayToken , setUpdateTokenisCallback } from './UserData';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 
 const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
-  const [spkey, setSPKey] = useState(spotifyToken); 
-  const token = 'BQDsYM8UYVSIGMObS4wWW9V1s7LPQOfBvZHQf4taDyiTItGhk8GHvepp9n1EJ2UBtS3No9nR_1q1lPp69rncfIjR_2i8iFINlcsjGUix24DeHLZNBq6IrSCoOgNLJUcXH3hm9pGseIdO_TE5Pyh2Y02_Df11AIX4GSt2pTUyDM8IjIE85RuGx762bScglM9DL8PUa3ip5-zz0zrGYv7ig90_gqecotVl';
+  // const token = 'BQDsYM8UYVSIGMObS4wWW9V1s7LPQOfBvZHQf4taDyiTItGhk8GHvepp9n1EJ2UBtS3No9nR_1q1lPp69rncfIjR_2i8iFINlcsjGUix24DeHLZNBq6IrSCoOgNLJUcXH3hm9pGseIdO_TE5Pyh2Y02_Df11AIX4GSt2pTUyDM8IjIE85RuGx762bScglM9DL8PUa3ip5-zz0zrGYv7ig90_gqecotVl';
+  const [token, setToken] = useState(spotifyPlayToken);
   const [key, setKey] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [subUris, setSubUris] = useState(['10AC3n6YglAdIpi4TUAjNZ', '5eY7692tmgHB9dbmq6wa2M']);
   const [collapsed, setCollapsed] = useState(true);
+
+  useEffect(() => {
+    setUpdateTokenisCallback((newToken) => {
+      console.log('[SpotifyPlayBack] Token updated:', newToken);
+      setToken(newToken);
+    });
+  }, []);
 
   useEffect(() => {
     console.log("uris:", uris);
@@ -41,7 +48,7 @@ const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
         />
         <SpotifyPlayer
         key={key}
-        token={spkey}
+        token={token}
         uris={subUris.map((uri) => `spotify:track:${uri}`)}
         autoPlay={true}
         initialIndex={1}

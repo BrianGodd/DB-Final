@@ -8,9 +8,14 @@ let spotifyToken = '';
 let spotifyPlayToken = 'BQA4jGR068ULNaezdb2SYXnH8nNvTT5DrM5ra2ttffAyljvNJzxfQOg3ZJmc7uOytzVPayBthUAMZpt53aqTXRwLnMUZdNqPmwp9dCGmHnjPckxlmvlNUWVf_y2NO0EoSS1FASfWJ74Pwmc57iUUiLj2q8m7IdSI1d-tRIO-HefVLfCzP0tBbrTEeA9eEmyFXpVgXx0JJVKPHdH7blHN1sLW4lDK0au9p46JqjJ2yMDPpA401AQSiQfI-54mhy6Guyl1Sldp';
 let uris = ['10AC3n6YglAdIpi4TUAjNZ', '5eY7692tmgHB9dbmq6wa2M'];
 let updateUrisCallback = () => {}; // 初始化一個回調函數
+let updateTokenCallback = () => {};
 
 const setUpdateUrisCallback = (callback) => {
   updateUrisCallback = callback;
+};
+
+const setUpdateTokenisCallback = (callback) => {
+  updateTokenCallback = callback;
 };
 
 const UpdateUris = async (newList) => {
@@ -57,7 +62,8 @@ const UpdateToken = async () => {
 const UpdateSpotifyPlay = async (newToken) => {
   console.log(newToken);
   spotifyPlayToken = newToken;
+  setUpdateTokenisCallback(newToken);
 }
   
 
-export { username, nickname, spotifyToken, UpdateName, UpdateToken, uris, UpdateUris, setUpdateUrisCallback, UpdatePlaying, spotifyPlayToken, UpdateSpotifyPlay};
+export { username, nickname, spotifyToken, UpdateName, UpdateToken, uris, UpdateUris, setUpdateUrisCallback, setUpdateTokenisCallback, UpdatePlaying, spotifyPlayToken, UpdateSpotifyPlay};
