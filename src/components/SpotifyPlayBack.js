@@ -7,15 +7,22 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
   // const token = 'BQDsYM8UYVSIGMObS4wWW9V1s7LPQOfBvZHQf4taDyiTItGhk8GHvepp9n1EJ2UBtS3No9nR_1q1lPp69rncfIjR_2i8iFINlcsjGUix24DeHLZNBq6IrSCoOgNLJUcXH3hm9pGseIdO_TE5Pyh2Y02_Df11AIX4GSt2pTUyDM8IjIE85RuGx762bScglM9DL8PUa3ip5-zz0zrGYv7ig90_gqecotVl';
   const [token, setToken] = useState(spotifyPlayToken);
+  const [mounted, setMounted] = useState(true);
   const [key, setKey] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [subUris, setSubUris] = useState(['10AC3n6YglAdIpi4TUAjNZ', '5eY7692tmgHB9dbmq6wa2M']);
   const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
-    setUpdateTokenisCallback((newToken) => {
+    setUpdateTokenisCallback(async (newToken) => {
       console.log('[SpotifyPlayBack] Token updated:', newToken);
+
+      setMounted(false);
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       setToken(newToken);
+      setMounted(true);
     });
   }, []);
 
@@ -46,7 +53,7 @@ const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
         onClick={() => setCollapsed(!collapsed)}
         style={{ position: 'absolute', top: '40px', left: '-35px', transform: 'translateY(-50%)' ,}}
         />
-        <SpotifyPlayer
+        {mounted && (<SpotifyPlayer
         key={key}
         token={token}
         uris={subUris.map((uri) => `spotify:track:${uri}`)}
@@ -58,6 +65,7 @@ const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
             }
         }}
         />
+        )}
     </div>
     
   );
