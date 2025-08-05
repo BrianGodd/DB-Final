@@ -47,7 +47,7 @@ import React, { useState , useEffect } from 'react';
      try { 
        const options = { 
          method: 'GET', 
-         url: `https://api.spotify.com/v1/playlists/37i9dQZEVXbKXQ4mDTEBXq`,
+         url: `https://api.spotify.com/v1/playlists/1l6FVZYUqKH7OUXsKRVZBN`,
          headers: { 
            'Authorization': `Bearer ${token}`, 
            'Accept': 'application/json', 
