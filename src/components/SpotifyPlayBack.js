@@ -49,7 +49,7 @@ const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
 
   return (
     <>
-    <div
+    {/* <div
       style={{
         position: 'absolute',
         top: '6%',
@@ -59,7 +59,7 @@ const SpotifyPlayBack = ({ onAddSongAndNextRef }) => {
       }}
     >
       <VolumeControl onVolumeChange={setVolume} />
-    </div>
+    </div> */}
 
     <div style={{ position: 'absolute', top: '40%', left: !collapsed ? '93%' : '103%', transform: 'translate(-50%, -50%)', width: !collapsed ? '40%' : '20%', height: '80%' , transition: 'left 0.3s, width 0.3s',}}>
         <Button
